@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Slackr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="resource/logo1.svg" type="image/x-icon" />
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/login-register.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/page.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/modal.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/main-structure.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/message.css" />
+  <link rel="stylesheet" type="text/css" media="screen" href="styles/popover.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+          crossorigin="anonymous"></script>
+  <script type="module" src="src/main.js"></script>
+
+</head>
+
+<body>
+    <!-- Toast Part -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <strong class="me-auto" id="toast-title"></strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toast-body"></div>
+    </div>
+  </div>
+
+    <!-- Create Channel Modal Part -->
+  <div class="modal create-channel-page" tabindex="-1" id="create-channel">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header create-channel-page-title-container">
+          <div class="create-channel-page-title">Create a new Channel</div>
+        </div>
+        <div class="modal-body create-channel-body">
+          <div class="input-group">
+            <div class="form-floating mb-3">
+              <input type="text" class="form-control input-border" placeholder="username@example.com"
+                     id="create-channel-title" aria-label="Create channel title">
+              <label for="create-channel-title">Channel Title</label>
+            </div>
+          </div>
+
+          <div class="create-channel-type-container">
+            <div class="form-floating">
+              <select class="form-select input-border" id="create-channel-type" aria-label="Create channel type">
+                <option selected value="1">Private</option>
+                <option value="2">Public</option>
+              </select>
+              <label for="create-channel-type">Channel Type</label>
+            </div>
+          </div>
+
+          <div class="form-floating">
+              <textarea class="form-control input-border" placeholder="description"
+                        id="create-channel-description" style="height: 100px"></textarea>
+              <label for="create-channel-description">Description</label>
+            </div>
+        </div>
+        <div class="modal-footer create-channel-footer-container">
+          <button type="button" class="btn btn-primary create-channel-button" id="create-channel-create-button">
+            Create
+          </button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="create-channel-cancel-button">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Join Channel Modal Part -->
+  <div class="modal join-channel-page" tabindex="-1" id="join-channel-page">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="create-channel-page-title" id="join-channel-profile-title">Join New Channel</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="x-close-join-channel">
+          </button>
+        </div>
+        <div class="modal-body create-channel-body">
+          <div class="join-channel-word">Title: <br /><span id="join-channel-title"></span></div>
+          <div class="join-channel-word">Type: <br /><span id="join-channel-type"></span></div>
+          <div class="join-channel-word">Description: <br /><span id="join-channel-description"></span></div>
+        </div>
+
+        <div class="modal-footer create-channel-footer-container">
+          <button type="button" class="btn btn-primary create-channel-button" id="join-channel-button">Join</button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="join-channel-cancel-button">
+            Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- User Profile Modal Part -->
+  <div class="modal user-profile-page" tabindex="-1" id="user-profile-page">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="user-profile-title" id="user-profile-title">User Profile</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="user-profile-x-close">
+          </button>
+        </div>
+        <div class="modal-body ">
+          <div class="user-profile-body-container">
+            <div class="user-profile-avatar-container"><img id="user-profile-avatar" src="" alt="user avatar"></div>
+            <div class="user-profile-introduction-container">
+              <div class="user-profile-introduction" id="user-profile-name"></div>
+              <div class="user-profile-introduction" id="user-profile-email"></div>
+            </div>
+          </div>
+          <div class="user-profile-introduction-description" id="user-profile-bio"></div>
+        </div>
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="user-profile-edit">Edit</button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="user-profile-close">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Edited Profile Modal Part -->
+  <div class="modal edit-my-profile-page" tabindex="-1" id="edit-my-profile-page">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="user-profile-title">My Profile</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  aria-label="Close" id="edit-profile-x-close"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <!-- Avatar -->
+          <div class="edit-avatar-container">
+            <div class="edit-avatar-input-container">
+              <div class="edit-my-profile-body-title" >Avatar:</div>
+              <div class="edit-my-profile-body-each-container">
+                <div class="edit-my-profile-body-origin-content">
+                  <div class="input-group">
+                    <input type="file" class="form-control input-border"
+                           id="edit-avatar-input" accept=".jpeg, .jpg, .png">
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="edit-avatar-show-container"><img src="" id="edit-avatar-show" alt="edited avatar"></div>
+          </div>
+
+            <!-- Name -->
+          <div class="edit-my-profile-body-title">UserName:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-my-profile-name">
+              <div class="input-group">
+                <input disabled type="text" class="form-control input-border"
+                         id="my-profile-name" aria-label="Edit profile name">
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-profile-name-icon" alt="name edit icon">
+              <img src="resource/check2-square.svg"  class="check2-square-icon"
+                   id="confirm-profile-name-icon" alt="name confirm icon">
+            </div>
+          </div>
+
+            <!-- Email -->
+          <div class="edit-my-profile-body-title">Email:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-my-profile-email">
+              <div class="input-group">
+                <input disabled type="email" class="form-control input-border"
+                         id="my-profile-email" aria-label="Edit profile email">
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-profile-email-icon" alt="email edit icon">
+              <img src="resource/check2-square.svg" class="check2-square-icon"
+                   id="confirm-profile-email-icon" alt="email confirm icon">
+            </div>
+          </div>
+
+            <!-- Password -->
+          <div class="edit-my-profile-body-title">Password:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-my-profile-password">
+              <div class="input-group">
+                <input disabled type="password" class="form-control input-border"
+                         id="my-profile-password" aria-label="Edit profile password">
+                <button class="btn btn-outline-secondary" type="button" id="edit-part-show-hide-button">
+                  Show
+                </button>
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-profile-password-icon" alt="password edit icon">
+              <img src="resource/check2-square.svg" class="check2-square-icon"
+                   id="confirm-profile-password-icon" alt="password confirm icon">
+            </div>
+          </div>
+
+            <!-- Bio -->
+          <div class="edit-my-profile-body-title">Bio:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-my-profile-bio">
+              <div class="input-group mb-3">
+                <textarea disabled class="form-control input-border"
+                         id="my-profile-bio" aria-label="Edit profile bio">
+                </textarea>
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-profile-bio-icon" alt="bio edit icon">
+              <img src="resource/check2-square.svg" class="check2-square-icon"
+                   id="confirm-profile-bio-icon" alt="bio confirm icon">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="edit-profile-submit">Submit</button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="edit-profile-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Edited Channel Profile Modal Part -->
+  <div class="modal edit-channel-page" tabindex="-1" id="edit-channel-page">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="user-profile-title">Channel Profile</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                  id="edit-channel-profile-x-close"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <!-- Title -->
+          <div class="edit-my-profile-body-title">Channel Title:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-channel-title">
+              <div class="input-group">
+                <input disabled type="text" class="form-control input-border"
+                         id="channel-profile-title" aria-label="Edit channel title">
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-channel-profile-title-icon"
+                   alt="channel edit icon">
+              <img src="resource/check2-square.svg"  class="channel-check2-square-icon"
+                   id="confirm-channel-profile-title-icon" alt="channel confirm icon">
+            </div>
+          </div>
+
+            <!-- Type -->
+          <div class="edit-my-profile-body-title">Channel Type:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-channel-type-container">
+              <div class="input-group">
+                <select disabled class="form-select input-border" id="edit-channel-profile-type"
+                        aria-label="edit channel type">
+                  <option value="1">Private</option>
+                  <option value="2">Public</option>
+                </select>
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-channel-profile-type-icon" alt="channel title edit icon">
+              <img src="resource/check2-square.svg" class="channel-check2-square-icon"
+                   id="confirm-channel-profile-type-icon" alt="channel title confirm icon">
+            </div>
+          </div>
+
+            <!-- createAt -->
+          <div class="edit-my-profile-body-title">Create At:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-channel-profile-date-container">
+              <div class="input-group">
+                <input disabled type="text" class="form-control input-border"
+                         id="channel-profile-create-date" aria-label="show channel create time">
+              </div>
+            </div>
+          </div>
+
+            <!-- Description -->
+          <div class="edit-my-profile-body-title">Description:</div>
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content" id="edit-channel-profile-description">
+              <div class="input-group mb-3">
+                <textarea disabled class="form-control input-border"
+                         id="channel-profile-description" aria-label="edit channel description">
+                </textarea>
+              </div>
+              <img src="resource/pencil-square.svg" id="edit-channel-profile-description-icon"
+                   alt="description edit icon">
+              <img src="resource/check2-square.svg" class="channel-check2-square-icon"
+                   id="confirm-channel-profile-description-icon" alt="description confirm icon">
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="edit-channel-submit">Submit</button>
+          <button type="button" class="btn btn-danger create-channel-button" id="exit-channel">Exit</button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="edit-channel-cancel">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Edit Message Modal Page -->
+  <div class="modal edit-message-page" tabindex="-1" id="edit-message-page">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="user-profile-title">Edit Sent Message</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="edit-message-x-close">
+          </button>
+        </div>
+
+        <div class="modal-body">
+          <div class="edit-my-profile-body-each-container">
+            <div class="edit-my-profile-body-origin-content">
+              <div class="input-group mb-3">
+                <textarea class="form-control input-border" id="edit-message-content" aria-label="edit message">
+                </textarea>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="edit-message-save">Save</button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="edit-message-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Edit Message Modal Page -->
+  <div class="modal view-photo-page" tabindex="-1" id="view-photo-page">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header">
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="view-photo-x-close">
+          </button>
+        </div>
+
+        <div class="modal-body view-photo">
+          <img src="" id="view-photo-content" class="img-fluid" alt="photo">
+        </div>
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="last-photo"><</button>
+          <button type="button" class="btn btn-primary create-channel-button" id="next-photo">></button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal edit-picture-page" tabindex="-1" id="edit-picture-page">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="user-profile-title">Edit Send Picture </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="edit-picture-x-close">
+          </button>
+        </div>
+
+        <div class="modal-body ">
+          <div class="edit-picture-body-each-container">
+            <div class="input-group mb-3">
+              <input type="file" class="form-control input-border" id="edit-picture-input" accept=".jpeg, .jpg, .png">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="edit-picture-save">
+            Save
+          </button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="edit-picture-cancel">
+            Cancel
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+    <!-- Invite Modal Page -->
+  <div class="modal invite-page" tabindex="-1" id="invite-page">
+    <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable create-channel-window">
+      <div class="modal-content create-channel-container">
+        <div class="modal-header user-profile-title-footer">
+          <div class="user-profile-title">Invite User to Channel</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="invite-user-x-close">
+          </button>
+        </div>
+
+        <div class="modal-body" id="invite-user-body"></div>
+
+        <div class="modal-footer user-profile-footer">
+          <button type="button" class="btn btn-primary create-channel-button" id="invite-user-invite">Invite</button>
+          <button type="button" class="btn btn-secondary create-channel-button" id="invite-user-cancel">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Error Modal Part -->
+  <div class="modal error-page" tabindex="-1" id="error">
+    <div class="modal-dialog modal-dialog-centered error-window">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="errTitle"></h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="x-close"></button>
+        </div>
+        <div class="modal-body"><p id="errBody"></p></div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="closeButton">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+    <!-- Login Part -->
+  <div class="login-register-page" id="login">
+    <div class="login-register-logo-container"><img src="resource/logo.svg" alt="slackr logo"></div>
+    <div class="login-register-title login-title">Sign in to Slackr</div>
+    <div class=" login-input-container">
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control input-border" placeholder="username@example.com" id="email-input"
+               aria-label="Input email">
+        <label for="email-input">Email address</label>
+      </div>
+    </div>
+
+    <div class="login-input-container">
+      <div class="input-group mb-3">
+        <div class="form-floating">
+          <input type="password"
+                 class="form-control input-border"
+                 placeholder="username@example.com"
+                 id="password-input"
+                 aria-label="Input email">
+          <label for="password-input">Password</label>
+        </div>
+        <button class="btn btn-outline-secondary login-input" type="button" id="show-hide-button">
+          Show
+        </button>
+      </div>
+    </div>
+
+    <div class="login-input-container">
+      <button type="button" class="btn btn-primary sign-in-up-button" id="login-button">Sign In</button>
+    </div>
+
+    <div class="go-to-register-login-container">
+      <div>New to Slackr?</div>
+      <button class="btn btn-link go-to-link " type="button" id="sign-up-link">Create an account</button>
+    </div>
+  </div>
+
+    <!-- Register Part -->
+  <div class="login-register-page" id="register">
+    <div class="login-register-logo-container"><img src="resource/logo.svg" alt="slackr logo"></div>
+    <div class="login-register-title register-title">
+      First of all, enter your email <br />
+      address to create an account
+    </div>
+    <div class="register-form-container">
+      <div class="register-row-form-container">
+        <div class="register-input-cell">
+          <div class="form-floating mb-3">
+            <input type="email" class="form-control input-border register-input" placeholder="username@example.com"
+                   id="register-email" aria-label="Register email">
+            <label for="email-input">Email address</label>
+          </div>
+        </div>
+        <div class="register-input-cell">
+          <div class="form-floating mb-3">
+            <input type="text" class="form-control input-border register-input" placeholder=""
+                   id="register-username" aria-label="Register email">
+            <label for="email-input">Username</label>
+          </div>
+        </div>
+      </div>
+      <div class="register-row-form-container">
+        <div class="register-input-cell">
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control input-border register-input" placeholder=""
+                   id="register-password" aria-label="Register password">
+            <label for="email-input">Password</label>
+          </div>
+        </div>
+        <div class="register-input-cell">
+          <div class="form-floating mb-3">
+            <input type="password" class="form-control input-border register-input" placeholder=""
+                   id="register-confirm-password" aria-label="Register confirm password">
+            <label for="email-input">Confirm Password</label>
+          </div>
+        </div>
+      </div>
+      <div class="sign-up-container">
+        <button type="button" class="btn btn-primary sign-in-up-button" id="signup-button">Sign Up</button>
+      </div>
+
+      <div class="go-to-register-login-container">
+        <div>Already has an account</div>
+        <button class="btn btn-link go-to-link " type="button" id="sign-in-link">Sign In Slackr</button>
+      </div>
+    </div>
+  </div>
+
+    <!-- Main Structure Part -->
+  <div class="main-structure" id="main-structure">
+    <!-- Main Structure Navbar Part -->
+    <div class="main-structure-navbar-container">
+      <div class="navbar-logo-container">
+        <div class="navbar-logo-inner-container"><img src="resource/logo1.svg" alt="slackr logo"></div>
+      </div>
+      <div class="navbar-icon-container">
+        <div class="navbar-icon-inner-container">
+          <img src="resource/person.svg" class="navbar-icon" alt="edit profile icon" id="navbar-my-profile-icon">
+          <img src="resource/sign-out.svg" class="navbar-icon" id="sign-out" alt="sign out icon">
+          <img src="resource/avatar.svg" class="navbar-avatar" id="navbar-avatar" alt="user avatar">
+        </div>
+      </div>
+    </div>
+
+    <!-- Main Structure Channel List Part -->
+    <div class="channel-list-container" id="channel-list-container">
+      <div class="channel-list-title-container">
+        <div class="channel-list-title-inner-container">
+          <div class="channel-list-title">Channel</div>
+          <div class="add-channel-icon"><img src="resource/plus-square.svg" id="add-channel" alt="add channel" /></div>
+        </div>
+      </div>
+      <div class="channel-list-body" id="channel-list-body"></div>
+    </div>
+
+    <!-- Main Structure Message Part -->
+    <div class="message-part-container" id="message-part-container">
+      <div class="message-part-inner-container" id="message-part-inner-container">
+        <div class="message-title-container">
+          <div class="message-channel-title" id="message-channel-title"></div>
+          <div class="more-detail-icon"
+               id="exit"><img src="resource/return.svg" alt="exit channel" /></div>
+          <div class="more-detail-icon"
+               id="pin-list"><img src="resource/pinlist.svg" alt="pin list" /></div>
+          <div class="more-detail-icon" id="channel-invite">
+            <img src="resource/person-fill-add.svg" alt="channel invite" />
+          </div>
+          <div class="more-detail-icon most-right-icon" id="channel-more-detail">
+            <img src="resource/three-dots.svg" alt="channel more detail" />
+          </div>
+        </div>
+
+        <div class="message-body-container">
+          <div class="message-view-container">
+            <div class="message-view-body-container" id="message-view-body-container"></div>
+
+            <div class="message-send-part-container">
+              <div class="message-send-part-inner-container">
+                <img src="resource/picture.svg" class="message-send-part-icon" id="send-photo-icon" alt="add picture" />
+                <input type="file" id="photo-send" accept=".jpeg, .jpg, .png" />
+                <input type="text"
+                       class="form-control
+                       input-message"
+                       id="message-input"
+                       aria-label="message input"
+                       placeholder="Type a message..." />
+                <img src="resource/send.svg" class="message-send-part-icon" id="send-button" alt="send Message" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="src/login.js"></script>
+  <script type="module" src="src/error.js"></script>
+  <script type="module" src="src/message.js"></script>
+  <script type="module" src="src/register.js"></script>
+  <script type="module" src="src/mainStructure.js"></script>
+  <script type="module" src="src/user.js"></script>
+  <script type="module" src="src/toast.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,264 @@
+
+
+.error-page {
+    background-color: rgba(0,0,0,0.5);
+}
+
+.error-window {
+    width: 50%;
+    height: 25%;
+}
+
+
+.create-channel-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.create-channel-window {
+    width: 30%;
+}
+
+.create-channel-container {
+    padding: calc(5%);
+}
+
+.create-channel-body {
+    display: flex;
+    flex-direction: column;
+}
+
+.create-channel-page-title-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: calc(3%);
+    width: 100%;
+}
+
+.create-channel-page-title {
+    display: flex;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: bolder;
+    color: #002333;
+    font-family: Inter, sans-serif;
+}
+
+.create-channel-type-container {
+    width: 100%;
+    margin-top: calc(3%);
+    margin-bottom: calc(5%);
+}
+
+.create-channel-footer-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.create-channel-button {
+    width: 30%;
+    margin-top: calc(3%);
+}
+
+.join-channel-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.join-channel-word {
+    font-size: 1.2rem;
+    font-weight: bolder;
+    color: #002333;
+    font-family: Inter, sans-serif;
+    margin: calc(3%) calc(1%);
+}
+
+.join-channel-word span {
+    font-size: 1rem;
+    font-weight: normal;
+}
+
+.user-profile-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.user-profile-body-container {
+    display: flex;
+}
+
+.user-profile-avatar-container {
+    flex: 3;
+    justify-content: center;
+}
+
+.user-profile-avatar-container img {
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.user-profile-introduction-container {
+    display: flex;
+    flex-direction: column;
+    flex: 7;
+    margin-left: calc(8%);
+    justify-content: center;
+}
+
+.user-profile-footer {
+    display: flex;
+    border: none;
+    justify-content: space-between;
+}
+
+.user-profile-title {
+    border: none;
+    font-size: 1.5rem;
+    font-family: Inter, sans-serif;
+    font-weight: bolder;
+}
+
+.user-profile-introduction {
+    font-size: 1.1rem;
+    margin: calc(1%) 0;
+}
+
+.user-profile-introduction-description {
+    font-size: 1rem;
+    margin-top: calc(5%);
+    margin-bottom: calc(1%);
+}
+
+#user-profile-edit {
+    visibility: hidden;
+}
+
+.edit-my-profile-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.edit-my-profile-body-each-container {
+    display: flex;
+    align-items: center;
+}
+
+
+.edit-my-profile-body-title {
+    font-size: 1.2rem;
+    font-family: Inter, sans-serif;
+    margin-top: calc(3%);
+}
+
+.edit-my-profile-input {
+    display: none;
+    width: 100%;
+}
+
+.edit-my-profile-body-origin-content {
+    flex: 1;
+    display: flex;
+    justify-content: space-between;
+    margin-top: calc(1%);
+    font-size: 1.2rem;
+}
+
+.edit-my-profile-body-origin-content img {
+    cursor: pointer;
+    margin-left: calc(2%);
+}
+
+.edit-my-profile-input img {
+    cursor: pointer;
+    margin-left: calc(2%);
+}
+
+.profile-detail {
+    overflow-x: auto;
+}
+
+.check2-square-icon {
+    display: none;
+}
+
+#edit-confirm-password {
+    display: none;
+}
+
+.edit-avatar-container {
+    display: flex;
+}
+
+.edit-avatar-input-container {
+    flex: 8;
+}
+
+.edit-avatar-show-container {
+    flex: 2;
+    margin-left: calc(3%);
+    display: flex;
+    justify-content: end;
+
+}
+
+.edit-avatar-show-container img {
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.edit-message-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.edit-channel-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.invite-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.invite-each-container {
+    font-size: 1.2rem;
+    font-family: Inter, sans-serif;
+    margin-top: calc(3%);
+}
+
+.edit-picture-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.edit-picture-body-each-container {
+    margin-top: calc(3%);
+}
+
+.view-photo-page {
+    display: none;
+    background-color: rgba(217, 217, 217, 0.5);
+}
+
+.view-photo {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-dialog {
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modal-dialog-scrollable {
+    width: 90%;
+}
